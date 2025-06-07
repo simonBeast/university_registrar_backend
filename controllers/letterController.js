@@ -125,7 +125,7 @@ exports.getMyApprovedLetters = catchAsync(async(req,res,next)=>{
       },
 
     ]
-  );;
+  );
 
   return res.status(200).json(
     foundLetters
@@ -218,6 +218,7 @@ exports.approveLetter = catchAsync(async(req,res,next)=>{
       approvedBy: req.user.id,
       approvedDate: new Date(Date.now()),
       isApproved: true,
+      file: req?.file?.filename
     },
     {new:true}).populate(
       [

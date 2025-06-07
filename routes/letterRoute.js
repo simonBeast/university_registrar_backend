@@ -7,6 +7,7 @@ const { letterCreateValidationSchema } = require('../validations/letterValidatio
 const { createLetter, getLetter, getLetters, getMyLetters, getMyApprovedLetters, getMyDeclinedLetters, getLettersApprovedByMe, getLettersDeclinedByMe, approveLetter, declineLetter } = require('../controllers/letterController');
 const { restrictTo } = require('../utils/AuthGuard');
 const { ROLE_TYPE } = require('../utils/utils');
+const multerConfig = require('../utils/multerConfig');
 const AuthGuard = require('../utils/AuthGuard').guard;
 
 router.post('/',AuthGuard,validate(letterCreateValidationSchema),createLetter);
@@ -17,6 +18,6 @@ router.get('/myDeclinedLetters',AuthGuard,getMyDeclinedLetters);
 router.get('/lettersIApproved',AuthGuard,restrictTo(ROLE_TYPE.ADMIN),getLettersApprovedByMe);
 router.get('/lettersIDeclined',AuthGuard,restrictTo(ROLE_TYPE.ADMIN),getLettersDeclinedByMe);
 router.get('/:id',AuthGuard,getLetter);
-router.patch("/:id/approve",AuthGuard,restrictTo(ROLE_TYPE.ADMIN),approveLetter);
+router.patch("/:id/approve",multerConfig.single("profilePhoto"),AuthGuard,restrictTo(ROLE_TYPE.ADMIN),approveLetter);
 router.patch("/:id/decline",AuthGuard,restrictTo(ROLE_TYPE.ADMIN),declineLetter);
 module.exports = router;

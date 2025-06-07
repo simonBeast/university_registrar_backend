@@ -47,7 +47,7 @@ class Filter{
     paginate(){
 
         let page = (parseInt(this.queryString["page"]) ?? 1) * 1 || 1;
-        const limit = (parseInt(this.queryString["limit"]) ?? 1) * 1 || 10;
+        const limit = (parseInt(this.queryString["limit"]) ?? 1) * 1 || 50;
         let skip = (page - 1) * limit || 0;
         this.query = this.query.skip(skip).limit(limit);
         return this;

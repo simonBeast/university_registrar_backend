@@ -4,6 +4,9 @@ const letterSchema = new mongoose.Schema({
     referenceNumber:{
         type:String,
     },
+    file:{
+        type:String,
+    },
     approvedDate:{
         type:Date,
         default: null,

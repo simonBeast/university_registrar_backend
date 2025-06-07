@@ -19,6 +19,7 @@ app.use(cors({
 
 
 app.use(express.static(__dirname + '/uploads/images'));
+app.use(express.static(__dirname + '/uploads/pdfs'));
 
 app.use('/api/v1/users/', userRouter);
 app.use('/api/v1/letters/', letterRouter);

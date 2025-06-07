@@ -1,5 +1,6 @@
 const AppExceptions = require('../utils/AppExceptions');
 const multer = require('multer');
+const path = require('path');
 
 const multerStorage = multer.diskStorage({
     destination: (req,file,cb)=>{
@@ -11,15 +12,20 @@ const multerStorage = multer.diskStorage({
     }
 
 })
-const multerFilter = (req,file,cb)=>{
-    if(file.mimetype.startsWith('image')){
-        cb(null,true);
-    }
-    else{
-        console.log(file)
-        cb(new AppExceptions('Not an Image please enter a real image',400),false)
-    }
-}
+const multerFilter = (req, file, cb) => {
+   const fileExt = path.extname(file.originalname).toLowerCase();
+  
+  if (
+    file.mimetype.startsWith('image') ||
+    file.mimetype === 'application/pdf' ||
+    (file.mimetype === 'application/octet-stream' && fileExt === '.pdf')
+  ) {
+    cb(null, true);
+  } else {
+    console.log(file);
+    cb(new AppExceptions('Only images and PDFs are allowed.', 400), false);
+  }
+};
 module.exports = multer({
     storage:multerStorage,
     fileFilter:multerFilter
